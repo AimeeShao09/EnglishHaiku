@@ -7,11 +7,14 @@ Verse Lens is a full-stack web app that turns a photo into an AI-generated poem,
 - Upload image: JPEG, PNG, WebP (max 20MB)
 - Optional context box: one free-text description for scene, mood, and intent
 - AI poem generation:
-  - Auto-selects style: `haiku` or `imagist`
-  - Returns poem, style, and rationale
+  - `english_haiku`: English haiku mode
+  - `chinese_haiku`: Chinese haiku mode
+  - Returns poem, style, rationale
+- API key input includes a `Show / Hide` toggle for quick verification
 - Editable poem before export
 - If result is not ideal, user can return to input and add more context, then regenerate
 - Client-side watermark rendering via Canvas (original file remains untouched)
+- Chinese mode watermark uses Songti font stack (`Songti SC / STSong / SimSun`)
 - Download composite image in original format and resolution
 - PWA-ready frontend
 
@@ -89,6 +92,10 @@ Response:
 
 `POST /api/generate`
 
+`generation_mode` values:
+- `english_haiku` (default)
+- `chinese_haiku`
+
 Headers:
 
 ```text
@@ -101,8 +108,9 @@ Request body:
 ```json
 {
   "image_base64": "data:image/jpeg;base64,...",
+  "generation_mode": "english_haiku",
   "metadata": {
-    "context": "Late autumn after rain in the highlands, mist hanging low, mood is quiet melancholy."
+    "context": "Misty air over a curved riverbank, quiet mood, minimal scene."
   }
 }
 ```
@@ -112,9 +120,9 @@ Response body:
 ```json
 {
   "poem_title": "After Rain",
-  "poem_text": "Granite veins streaked wet...\n...",
+  "poem_text": "A wooden frame parts\nThe gray water by the bent bank\nOne duck drifts near home",
   "style": "haiku",
-  "rationale": "The scene is sparse and quiet, centered on a single moment."
+  "rationale": "The sparse composition and quiet motion suit a still, moment-focused haiku."
 }
 ```
 
@@ -131,6 +139,9 @@ Response body:
   - Update Vite proxy (`frontend/vite.config.js`) to the same port
 - npm cache permission issue:
   - Use local cache install: `npm install --cache .npm-cache`
+- `AI service unavailable` in English mode:
+  - Ensure backend is running with `--reload` or restart backend after pulling latest changes
+  - Confirm you are using `generation_mode: "english_haiku"` when testing API directly
 
 ## License
 
