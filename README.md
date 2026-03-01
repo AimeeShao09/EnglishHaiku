@@ -5,11 +5,12 @@ Verse Lens is a full-stack web app that turns a photo into an AI-generated poem,
 ## Features
 
 - Upload image: JPEG, PNG, WebP (max 20MB)
-- Optional metadata: season, weather, location, mood
+- Optional context box: one free-text description for scene, mood, and intent
 - AI poem generation:
   - Auto-selects style: `haiku` or `imagist`
   - Returns poem, style, and rationale
 - Editable poem before export
+- If result is not ideal, user can return to input and add more context, then regenerate
 - Client-side watermark rendering via Canvas (original file remains untouched)
 - Download composite image in original format and resolution
 - PWA-ready frontend
@@ -101,10 +102,7 @@ Request body:
 {
   "image_base64": "data:image/jpeg;base64,...",
   "metadata": {
-    "season": "Late Autumn",
-    "weather": "Misty, after rain",
-    "location": "Scottish Highlands",
-    "mood": "Quiet melancholy"
+    "context": "Late autumn after rain in the highlands, mist hanging low, mood is quiet melancholy."
   }
 }
 ```
